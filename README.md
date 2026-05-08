@@ -1,7 +1,9 @@
 # AncientBattles
 
 This is the videogame where you can play for one of the six Ancient countries, such as Rome, Carthage, Seleucids, Ptolemaic Egypt, Parthia, Barbarians.
+
 First you should choose your Ancient country, then enemy's one.
+
 There is unique balance between each two Ancient countries. This means that one country can have either advantage or disadvantage to another one in power.
 Then you should choose the sum of money in denaries, not greater then 50000 denaries.
 You should waste this sum for troops of your Ancient country.
