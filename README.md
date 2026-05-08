@@ -22,6 +22,7 @@ You can navigate through the game by pressing N key for passing forward and B ke
 
 In the stage of choosing the sum of money in denaries you should first press Space key for confirming the sum, only after this press N key.
 
+
 Project was written in August, 2014.
 
 Project was written with Visual Studio. I recommend you to run the solution with VS 2019 or later. If you don't have Visual Studio, you can run the game from Release folder.
