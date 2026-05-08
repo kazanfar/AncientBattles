@@ -4,7 +4,7 @@ This is the videogame where you can play for one of the six Ancient countries, s
 
 First you should choose your Ancient country, then enemy's one.
 
-There is unique balance between each two Ancient countries. This means that one country can have either advantage or disadvantage to another one in power.
+There is unique balance between each of two Ancient countries. This means that one country can have either advantage or disadvantage to another one in power.
 
 Then you should choose the sum of money in denaries, not greater then 50000 denaries.
 
@@ -12,11 +12,11 @@ You should waste this sum for troops of your Ancient country.
 
 The enemy also wastes the equal sum for troops of its Ancient country, for enemy it happens automatically (looks like AI).
 
-There is also unique balance between each two kinds of troops of each Ancient country. This means that one kind of troops can have either advantage or disadvantage to another one in power.
+There is also unique balance between each of two kinds of troops of each Ancient country. This means that one kind of troops can have either advantage or disadvantage to another one in power.
 
 Then AI rolls the dice.
 
-After that AI calculates the outcome of the battle, it depends from both the choosing Ancient country with its troops and the rolling the dice.
+After that AI calculates the outcome of the battle, it depends on both the choosing Ancient country with its troops and the rolling the dice.
 
 You can navigate through the game by pressing N key for passing forward and B key for passing back.
 
