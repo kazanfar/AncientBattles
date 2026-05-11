@@ -8,9 +8,9 @@ There is unique balance between each of two Ancient countries. This means that o
 
 Then you should choose the sum of money in denaries, not greater than 50000 denaries.
 
-You should waste this sum for troops of your Ancient country.
+You should spend this sum for troops of your Ancient country.
 
-The enemy also wastes the equal sum for troops of its Ancient country, for enemy it happens automatically (looks like AI).
+The enemy also spends the equal sum for troops of its Ancient country, for enemy it happens automatically (looks like AI).
 
 There is also unique balance between each of two kinds of troops of each Ancient country. This means that one kind of troops can have either advantage or disadvantage to another one in power.
 
