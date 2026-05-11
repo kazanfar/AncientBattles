@@ -1,6 +1,6 @@
 # AncientBattles
 
-This is the videogame where you can play for one of the six Ancient countries, such as Rome, Carthage, Seleucids, Ptolemaic Egypt, Parthia, Barbarians.
+This is the videogame where you can play for one of the six Ancient countries, such as Rome, Carthage, Seleucids, Ptolemaic Egypt, Parthia, Barbarians
 
 First you should choose your Ancient country, then enemy's one.
 
