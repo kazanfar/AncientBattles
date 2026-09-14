@@ -25,3 +25,9 @@ In the stage of choosing the sum of money in denaries you should first press Spa
 Project was written in August, 2014.
 
 Project was written with Visual Studio. I recommend you to run the solution with VS 2019 or later. If you don't have Visual Studio, you can run the game from Release folder, you should have actual version of "C++ Redistributable" package installed on your machine for this.
+
+## Patch ver. 1.1
+**Changes:**
+1. Improved exit processing, with _atexit_ method.
+2. Improved destructor of "Textures" class processing.
+3. Height of program window increased, for better displaying of the text below with increased fonts.
