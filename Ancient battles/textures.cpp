@@ -129,20 +129,93 @@ void Textures::loading_textures()
 
 Textures::~Textures()
 {
+	glDeleteTextures(num_text_countries, texName_countries);
 	delete[] texName_countries;
+
+	for (int i = 0; i < num_text_countries; i++) {
+		if (taux_countries[i]) {
+			if (taux_countries[i]->data) free(taux_countries[i]->data);
+			free(taux_countries[i]);
+		}
+	}
+	delete[] taux_countries;
+
+	////
+
+	glDeleteTextures(num_text_warriors_1, texName_1);
 	delete[] texName_1;
+	
+	for (int i = 0; i < num_text_warriors_1; i++) {
+		if (taux_1[i]) {
+			if (taux_1[i]->data) free(taux_1[i]->data);
+			free(taux_1[i]);
+		}
+	}
+	delete[] taux_1;
+
+	//
+
+	glDeleteTextures(num_text_warriors_2, texName_2);
 	delete[] texName_2;
+
+	for (int i = 0; i < num_text_warriors_2; i++) {
+		if (taux_2[i]) {
+			if (taux_2[i]->data) free(taux_2[i]->data);
+			free(taux_2[i]);
+		}
+	}
+	delete[] taux_2;
+
+	//
+
+	glDeleteTextures(num_text_warriors_3, texName_3);
 	delete[] texName_3;
+
+	for (int i = 0; i < num_text_warriors_3; i++) {
+		if (taux_3[i]) {
+			if (taux_3[i]->data) free(taux_3[i]->data);
+			free(taux_3[i]);
+		}
+	}
+	delete[] taux_3;
+
+	//
+
+	glDeleteTextures(num_text_warriors_4, texName_4);
 	delete[] texName_4;
+
+	for (int i = 0; i < num_text_warriors_4; i++) {
+		if (taux_4[i]) {
+			if (taux_4[i]->data) free(taux_4[i]->data);
+			free(taux_4[i]);
+		}
+	}
+	delete[] taux_4;
+
+	//
+
+	glDeleteTextures(num_text_warriors_5, texName_5);
 	delete[] texName_5;
+
+	for (int i = 0; i < num_text_warriors_5; i++) {
+		if (taux_5[i]) {
+			if (taux_5[i]->data) free(taux_5[i]->data);
+			free(taux_5[i]);
+		}
+	}
+	delete[] taux_5;
+
+	//
+
+	glDeleteTextures(num_text_warriors_6, texName_6);	
 	delete[] texName_6;
 
-	delete[] taux_countries;
-	delete[] taux_1;
-	delete[] taux_2;
-	delete[] taux_3;
-	delete[] taux_4;
-	delete[] taux_5;
+	for (int i = 0; i < num_text_warriors_6; i++) {
+		if (taux_6[i]) {
+			if (taux_6[i]->data) free(taux_6[i]->data);
+			free(taux_6[i]);
+		}
+	}
 	delete[] taux_6;
 }
 
@@ -289,32 +362,32 @@ int Countries::get_enemy_score()
 
 bool Picture_Countries::is_Barbarians (int x, int y) const
 {
-	return x >= 0 && x < width/3 && y >= 0 && y < (height - 100)/2;
+	return x >= 0 && x < width_window / 3 && y >= 0 && y < (height_aux - 100) / 2;
 }
 
 bool Picture_Countries::is_Carthage (int x, int y) const
 {
-	return x >= width/3 && x < 2*width/3 && y >= 0 && y < (height - 100)/2;
+	return x >= width_window / 3 && x < 2 * width_window / 3 && y >= 0 && y < (height_aux - 100) / 2;
 }
 
 bool Picture_Countries::is_Egypt (int x, int y) const
 {
-	return x >= 2*width/3 && x < width && y >= 0 && y < (height - 100)/2;
+	return x >= 2 * width_window / 3 && x < width_window && y >= 0 && y < (height_aux - 100) / 2;
 }
 
 bool Picture_Countries::is_Parthia (int x, int y) const
 {
-	return x >= 0 && x < width/3 && y >= 290 && y < height - 100;
+	return x >= 0 && x < width_window / 3 && y >= (height_aux - 100) / 2 && y < height_aux - 100;
 }
 
 bool Picture_Countries::is_Rome (int x, int y) const
 {
-	return x >= width/3 && x < 2*width/3 && y >= 290 && y < height - 100;
+	return x >= width_window / 3 && x < 2 * width_window / 3 && y >= (height_aux - 100) / 2 && y < height_aux - 100;
 }
 
 bool Picture_Countries::is_Seleucids (int x, int y) const
 {
-	return x >= 2*width/3 && x < width && y >= 290 && y < height - 100;
+	return x >= 2 * width_window / 3 && x < width_window && y >= (height_aux - 100) / 2 && y < height_aux - 100;
 }
 
 Warriors::Warriors() : _money(0)
@@ -493,47 +566,47 @@ int Picture_Warriors::get_third_case() const
 
 bool Picture_Warriors::is_first_in_two(int x, int y) const
 {
-	return x >= 0 && x < width/2 && y >= 0 && y < height - first_case;
+	return x >= 0 && x < width_window / 2 && y >= 0 && y < height_aux - first_case;
 }
 
 bool Picture_Warriors::is_second_in_two(int x, int y) const
 {
-	return x >= width/2 && x < width && y >= 0 && y < height - first_case;
+	return x >= width_window /2 && x < width_window && y >= 0 && y < height_aux - first_case;
 }
 
 bool Picture_Warriors::is_first_in_three(int x, int y) const
 {
-	return x >= 0 && x < width/3 && y >= 0 && y < height - second_case;
+	return x >= 0 && x < width_window / 3 && y >= 0 && y < height_aux - second_case;
 }
 
 bool Picture_Warriors::is_second_in_three(int x, int y) const
 {
-	return x >= width/3 && x < 2*width/3 && y >= 0 && y < height - second_case;
+	return x >= width_window / 3 && x < 2 * width_window / 3 && y >= 0 && y < height_aux - second_case;
 }
 
 bool Picture_Warriors::is_third_in_three(int x, int y) const
 {
-	return x >= 2*width/3 && x < width && y >= 0 && y < height - second_case;
+	return x >= 2 * width_window / 3 && x < width_window && y >= 0 && y < height_aux - second_case;
 }
 
 bool Picture_Warriors::is_first_in_four(int x, int y) const
 {
-	return x >= 0 && x < width/4 && y >= 0 && y < height - third_case;
+	return x >= 0 && x < width_window / 4 && y >= 0 && y < height_aux - third_case;
 }
 	
 bool Picture_Warriors::is_second_in_four(int x, int y) const
 {
-	return x >= width/4 && x < width/2 && y >= 0 && y < height - third_case;
+	return x >= width_window / 4 && x < width_window / 2 && y >= 0 && y < height_aux - third_case;
 }
 
 bool Picture_Warriors::is_third_in_four(int x, int y) const
 {
-	return x >= width/2 && x < 3*width/4 && y >= 0 && y < height - third_case;
+	return x >= width_window / 2 && x < 3 * width_window / 4 && y >= 0 && y < height_aux - third_case;
 }
 
 bool Picture_Warriors::is_forth_in_four(int x, int y) const
 {
-	return x >= 3*width/4 && x < width && y >= 0 && y < height - third_case;
+	return x >= 3 * width_window / 4 && x < width_window && y >= 0 && y < height_aux - third_case;
 }
 
 State::State()

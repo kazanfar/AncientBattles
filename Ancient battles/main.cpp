@@ -50,7 +50,7 @@ inline void delete_function()
 	delete battle;
 }
 
-inline string floatToString(float f)
+inline string float_to_string(float f)
  {
     std::ostringstream ss;
     ss << f;
@@ -320,7 +320,7 @@ void keyboard(unsigned char key, int x, int y) {
 	if (quit_available && (key == 'Q' || key == 'q'))
 	{	
 		exit(0);
-		glutPostRedisplay();
+		//glutPostRedisplay();
 	}
 	if (next_available && (key == 'N' || key == 'n'))
 	{	
@@ -392,24 +392,24 @@ void display()
 
 			glBegin(GL_QUADS);
 			glTexCoord2i(0, 0); glVertex2i(0, 0);
-			glTexCoord2i(0, 1); glVertex2i(0, height);
-			glTexCoord2i(1, 1); glVertex2i(width, height);
-			glTexCoord2i(1, 0); glVertex2i(width, 0);
+			glTexCoord2i(0, 1); glVertex2i(0, height_window);
+			glTexCoord2i(1, 1); glVertex2i(width_window, height_window);
+			glTexCoord2i(1, 0); glVertex2i(width_window, 0);
 			glEnd();
 			
 			glPushMatrix();
 			glColor3f(1.0, 0.0, 0.0);
-			glLineWidth(13.0);
-			glTranslated(50, height - height/4, 0);
-			glScalef(1.71,1.36,1.0);
+			glLineWidth(13.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+			glTranslated(50 * width_window / width_aux, height_window - height_window / 4, 0);
+			glScalef(1.71 * width_window / width_aux, 1.36 * height_window / height_aux, 1.0);
 			f->print_stroke_string(stroke_fonts[0], "ANCIENT");
 			glPopMatrix();
 
 			glPushMatrix();
 			glColor3f(1.0, 0.0, 0.0);
-			glLineWidth(13.0);
-			glTranslated(50, height - 3*height/4, 0);
-			glScalef(1.65,1.36,1.0);
+			glLineWidth(13.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+			glTranslated(50 * width_window / width_aux, height_window - 3 * height_window / 4, 0);
+			glScalef(1.65 * width_window / width_aux, 1.36 * height_window / height_aux, 1.0);
 			f->print_stroke_string(stroke_fonts[0], "BATTLES");
 			glPopMatrix();
 
@@ -431,24 +431,24 @@ void display()
 
 			glBegin(GL_QUADS);
 			glTexCoord2i(0, 0); glVertex2i(0, 0);
-			glTexCoord2i(0, 1); glVertex2i(0, height);
-			glTexCoord2i(1, 1); glVertex2i(width, height);
-			glTexCoord2i(1, 0); glVertex2i(width, 0);
+			glTexCoord2i(0, 1); glVertex2i(0, height_window);
+			glTexCoord2i(1, 1); glVertex2i(width_window, height_window);
+			glTexCoord2i(1, 0); glVertex2i(width_window, 0);
 			glEnd();
 
 			glPushMatrix();
 			glColor3f(1.0, 0.0, 0.0);
-			glLineWidth(5.0);
-			glTranslated(width/2 - 300, height/2 + 100, 0);
-			glScalef(0.4,0.4,1.0);
+			glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+			glTranslated(width_window / 2 - 300 * width_window / width_aux * 1.4, height_window / 2 + 100 * height_window / height_aux, 0);
+			glScalef(0.4 * width_window / width_aux * 1.4, 0.4 * height_window / height_aux * 1.2, 1.0);
 			f->print_stroke_string(stroke_fonts[0], "New game (press N)");
 			glPopMatrix();
 
 			glPushMatrix();
 			glColor3f(1.0, 0.0, 0.0);
-			glLineWidth(5.0);
-			glTranslated(width/2 - 300, height/2, 0);
-			glScalef(0.4,0.4,1.0);
+			glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+			glTranslated(width_window / 2 - 300 * width_window / width_aux * 1.4, height_window / 2, 0);
+			glScalef(0.4 * width_window / width_aux * 1.4, 0.4 * height_window / height_aux * 1.2, 1.0);
 			f->print_stroke_string(stroke_fonts[0], "Quit game (press Q)");
 			glPopMatrix();
 			
@@ -474,114 +474,122 @@ void display()
 				glBindTexture(GL_TEXTURE_2D, t->texName_countries[0]);
 
 				glBegin(GL_QUADS);
-				glTexCoord2i(0, 0); glVertex2i(0, height - 290);
-				glTexCoord2i(0, 1); glVertex2i(0, height);
-				glTexCoord2i(1, 1); glVertex2i(width/3, height);
-				glTexCoord2i(1, 0); glVertex2i(width/3, height - 290);
+				glTexCoord2i(0, 0); glVertex2i(0, height_window - 290);
+				glTexCoord2i(0, 1); glVertex2i(0, height_window);
+				glTexCoord2i(1, 1); glVertex2i(width_window / 3, height_window);
+				glTexCoord2i(1, 0); glVertex2i(width_window / 3, height_window - 290);
 				glEnd();
 
 				glBindTexture(GL_TEXTURE_2D, t->texName_countries[1]);
 
 				glBegin(GL_QUADS);
-				glTexCoord2i(0, 0); glVertex2i(width/3 + 1, height - 290);
-				glTexCoord2i(0, 1); glVertex2i(width/3 + 1, height);
-				glTexCoord2i(1, 1); glVertex2i(2*width/3, height);
-				glTexCoord2i(1, 0); glVertex2i(2*width/3, height - 290);
+				glTexCoord2i(0, 0); glVertex2i(width_window / 3 + 1, height_window - 290);
+				glTexCoord2i(0, 1); glVertex2i(width_window / 3 + 1, height_window);
+				glTexCoord2i(1, 1); glVertex2i(2 * width_window / 3, height_window);
+				glTexCoord2i(1, 0); glVertex2i(2 * width_window / 3, height_window - 290);
 				glEnd();
 
 				glBindTexture(GL_TEXTURE_2D, t->texName_countries[2]);
 
 				glBegin(GL_QUADS);
-				glTexCoord2i(0, 0); glVertex2i(2*width/3 + 1, height - 290);
-				glTexCoord2i(0, 1); glVertex2i(2*width/3 + 1, height);
-				glTexCoord2i(1, 1); glVertex2i(width, height);
-				glTexCoord2i(1, 0); glVertex2i(width, height - 290);
+				glTexCoord2i(0, 0); glVertex2i(2 * width_window / 3 + 1, height_window - 290);
+				glTexCoord2i(0, 1); glVertex2i(2 * width_window / 3 + 1, height_window);
+				glTexCoord2i(1, 1); glVertex2i(width_window, height_window);
+				glTexCoord2i(1, 0); glVertex2i(width_window, height_window - 290);
 				glEnd();
 
 				glBindTexture(GL_TEXTURE_2D, t->texName_countries[3]);
 
 				glBegin(GL_QUADS);
-				glTexCoord2i(0, 0); glVertex2i(0, 100);
-				glTexCoord2i(0, 1); glVertex2i(0, height - 290);
-				glTexCoord2i(1, 1); glVertex2i(width/3, height - 290);
-				glTexCoord2i(1, 0); glVertex2i(width/3, 100);
+				glTexCoord2i(0, 0); glVertex2i(0, 100 + (height_window - height_aux));
+				glTexCoord2i(0, 1); glVertex2i(0, height_window - 290);
+				glTexCoord2i(1, 1); glVertex2i(width_window / 3, height_window - 290);
+				glTexCoord2i(1, 0); glVertex2i(width_window / 3, 100 + (height_window - height_aux));
 				glEnd();
 
 				glBindTexture(GL_TEXTURE_2D, t->texName_countries[4]);
 
 				glBegin(GL_QUADS);
-				glTexCoord2i(0, 0); glVertex2i(width/3 + 1, 100);
-				glTexCoord2i(0, 1); glVertex2i(width/3 + 1, height - 290);
-				glTexCoord2i(1, 1); glVertex2i(2*width/3, height - 290);
-				glTexCoord2i(1, 0); glVertex2i(2*width/3, 100);
+				glTexCoord2i(0, 0); glVertex2i(width_window / 3 + 1, 100 + (height_window - height_aux));
+				glTexCoord2i(0, 1); glVertex2i(width_window / 3 + 1, height_window - 290);
+				glTexCoord2i(1, 1); glVertex2i(2 * width_window / 3, height_window - 290);
+				glTexCoord2i(1, 0); glVertex2i(2 * width_window / 3, 100 + (height_window - height_aux));
 				glEnd();
 
 				glBindTexture(GL_TEXTURE_2D, t->texName_countries[5]);
 
 				glBegin(GL_QUADS);
-				glTexCoord2i(0, 0); glVertex2i(2*width/3 + 1, 100);
-				glTexCoord2i(0, 1); glVertex2i(2*width/3 + 1, height - 290);
-				glTexCoord2i(1, 1); glVertex2i(width, height - 290);
-				glTexCoord2i(1, 0); glVertex2i(width, 100);
+				glTexCoord2i(0, 0); glVertex2i(2 * width_window / 3 + 1, 100 + (height_window - height_aux));
+				glTexCoord2i(0, 1); glVertex2i(2 * width_window / 3 + 1, height_window - 290);
+				glTexCoord2i(1, 1); glVertex2i(width_window, height_window - 290);
+				glTexCoord2i(1, 0); glVertex2i(width_window, 100 + (height_window - height_aux));
 				glEnd();
 
 				glPushMatrix();
 				glColor3f(1.0, 0.0, 0.0);
-				glLineWidth(5.0);
-				glTranslated(50, 25, 0);
-				glScalef(0.28,0.34,1.0);
+				glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 1.4);
+				glTranslated(50 * width_window / width_aux, 25 + (height_window - height_aux), 0);
+				glScalef(0.28 * width_window / width_aux * 2, 0.34 * height_window / height_aux * 1.2, 1.0);
 				if (second_value == 2)
-					f->print_stroke_string(stroke_fonts[0], "Click on your country. For return press B");
+					f->print_stroke_string(stroke_fonts[0], "Click on your country.");
 				else
-					f->print_stroke_string(stroke_fonts[0], "Click on enemy country. For return press B");
+					f->print_stroke_string(stroke_fonts[0], "Click on enemy country.");
+				glPopMatrix();
+
+				glPushMatrix();
+				glColor3f(1.0, 0.0, 0.0);
+				glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 1.4);
+				glTranslated(50 * width_window / width_aux, -60 + (height_window - height_aux), 0);
+				glScalef(0.28 * width_window / width_aux * 2, 0.34 * height_window / height_aux * 1.2, 1.0);
+				f->print_stroke_string(stroke_fonts[0], "For return press B.");
 				glPopMatrix();
 				
 				///
 				glPushMatrix();
 				glColor3f(0.0, 0.0, 0.0);
-				glLineWidth(5.0);
-				glTranslated(10, height - 145, 0);
-				glScalef(0.5,0.5,1.0);
+				glLineWidth(5.0 * width_window / width_aux);
+				glTranslated(10 * width_window / width_aux, height_window - 145, 0);
+				glScalef(0.5 * width_window / width_aux, 0.5, 1.0);
 				f->print_stroke_string(stroke_fonts[0], "Barbarians");
 				glPopMatrix();
 
 				glPushMatrix();
 				glColor3f(0.0, 0.0, 0.0);
-				glLineWidth(5.0);
-				glTranslated(10 + width/3, height - 145, 0);
-				glScalef(0.5,0.5,1.0);
+				glLineWidth(5.0 * width_window / width_aux);
+				glTranslated(10 * width_window / width_aux + width_window / 3, height_window - 145, 0);
+				glScalef(0.5 * width_window / width_aux, 0.5, 1.0);
 				f->print_stroke_string(stroke_fonts[0], "Carthage");
 				glPopMatrix();
 
 				glPushMatrix();
 				glColor3f(0.0, 0.0, 0.0);
-				glLineWidth(5.0);
-				glTranslated(10 + 2*width/3, height - 145, 0);
-				glScalef(0.5,0.5,1.0);
+				glLineWidth(5.0 * width_window / width_aux);
+				glTranslated(10 * width_window / width_aux + 2 * width_window / 3, height_window - 145, 0);
+				glScalef(0.5 * width_window / width_aux, 0.5, 1.0);
 				f->print_stroke_string(stroke_fonts[0], "Egypt");
 				glPopMatrix();
 
 				glPushMatrix();
 				glColor3f(0.0, 0.0, 0.0);
-				glLineWidth(5.0);
-				glTranslated(10 , height - 435, 0);
-				glScalef(0.5,0.5,1.0);
+				glLineWidth(5.0 * width_window / width_aux);
+				glTranslated(10 * width_window / width_aux, height_window - 435, 0);
+				glScalef(0.5 * width_window / width_aux, 0.5, 1.0);
 				f->print_stroke_string(stroke_fonts[0], "Parthia");
 				glPopMatrix();
 
 				glPushMatrix();
 				glColor3f(0.0, 0.0, 0.0);
-				glLineWidth(5.0);
-				glTranslated(10 + width/3 , height - 435, 0);
-				glScalef(0.5,0.5,1.0);
+				glLineWidth(5.0 * width_window / width_aux);
+				glTranslated(10 * width_window / width_aux + width_window / 3 , height_window - 435, 0);
+				glScalef(0.5 * width_window / width_aux, 0.5, 1.0);
 				f->print_stroke_string(stroke_fonts[0], "Rome");
 				glPopMatrix();
 
 				glPushMatrix();
 				glColor3f(0.0, 0.0, 0.0);
-				glLineWidth(5.0);
-				glTranslated(10 + 2*width/3 , height - 435, 0);
-				glScalef(0.5,0.5,1.0);
+				glLineWidth(5.0 * width_window / width_aux);
+				glTranslated(10 * width_window / width_aux + 2 * width_window / 3 , height_window - 435, 0);
+				glScalef(0.5 * width_window / width_aux, 0.5, 1.0);
 				f->print_stroke_string(stroke_fonts[0], "Seleucids");
 				glPopMatrix();
 				
@@ -702,17 +710,17 @@ void display()
 				glBindTexture(GL_TEXTURE_2D, t->texName_countries[second_value % 10 - 1]);
 
 				glBegin(GL_QUADS);
-				glTexCoord2i(0, 0); glVertex2i(0, 100);
-				glTexCoord2i(0, 1); glVertex2i(0, height);
-				glTexCoord2i(1, 1); glVertex2i(width, height);
-				glTexCoord2i(1, 0); glVertex2i(width, 100);
+				glTexCoord2i(0, 0); glVertex2i(0, 100 + (height_window - height_aux));
+				glTexCoord2i(0, 1); glVertex2i(0, height_window);
+				glTexCoord2i(1, 1); glVertex2i(width_window, height_window);
+				glTexCoord2i(1, 0); glVertex2i(width_window, 100 + (height_window - height_aux));
 				glEnd();
 				
 				glPushMatrix();
 				glColor3f(1.0, 0.0, 0.0);
-				glLineWidth(5.0);
-				glTranslated(10 , 75, 0);
-				glScalef(0.2,0.2,1.0);
+				glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.65);
+				glTranslated(10 * width_window / width_aux, 35 + (height_window - height_aux), 0);
+				glScalef(0.2 * width_window / width_aux * 1.7, 0.2 * height_window / height_aux * 1.4, 1.0);
 				switch (second_value)
 				{
 					case 31 : 
@@ -756,9 +764,9 @@ void display()
 
 				glPushMatrix();
 				glColor3f(1.0, 0.0, 0.0);
-				glLineWidth(5.0);
-				glTranslated(10 , 25, 0);
-				glScalef(0.2,0.2,1.0);
+				glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.65);
+				glTranslated(10 * width_window / width_aux, -40 + (height_window - height_aux), 0);
+				glScalef(0.2 * width_window / width_aux * 1.7, 0.2 * height_window / height_aux * 1.4, 1.0);
 				
 				switch (second_value)
 				{
@@ -769,13 +777,7 @@ void display()
 					case 25:
 					case 26: 
 						{
-							f->print_stroke_string(stroke_fonts[0], "Press B for going back, N - for choosing enemy");
-							if (next_pressed)
-							{
-								pair<string, int> p("your_country_is chosen", 3);
-								state->states.push_back(p);
-								next_pressed = false;
-							}
+							f->print_stroke_string(stroke_fonts[0], "Press B for going back,");
 							break;
 						};
 					case 31:
@@ -785,17 +787,55 @@ void display()
 					case 35:
 					case 36: 
 						{
-							f->print_stroke_string(stroke_fonts[0], "Choosing completed. Press B for going back, N - for going further");
-							if (next_pressed)
-							{
-								pair<string, int> p("all_sides_are chosen", 4);
-								state->states.push_back(p);
-								next_pressed = false;
-							}
+							f->print_stroke_string(stroke_fonts[0], "Choosing completed. Press B for going back,");
 							break;
 						};
 				}
 				glPopMatrix();
+
+				glPushMatrix();
+				glColor3f(1.0, 0.0, 0.0);
+				glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.65);
+				glTranslated(10 * width_window / width_aux, -115 + (height_window - height_aux), 0);
+				glScalef(0.2 * width_window / width_aux * 1.7, 0.2 * height_window / height_aux * 1.4, 1.0);
+
+				switch (second_value)
+				{
+					case 21:
+					case 22:
+					case 23:
+					case 24:
+					case 25:
+					case 26:
+					{
+						f->print_stroke_string(stroke_fonts[0], "N - for choosing enemy.");
+						if (next_pressed)
+						{
+							pair<string, int> p("your_country_is chosen", 3);
+							state->states.push_back(p);
+							next_pressed = false;
+						}
+						break;
+					};
+					case 31:
+					case 32:
+					case 33:
+					case 34:
+					case 35:
+					case 36:
+					{
+						f->print_stroke_string(stroke_fonts[0], "N - for going further.");
+						if (next_pressed)
+						{
+							pair<string, int> p("all_sides_are chosen", 4);
+							state->states.push_back(p);
+							next_pressed = false;
+						}
+						break;
+					};
+				}
+				glPopMatrix();
+
 				end_enter_money = false;
 				glutPostRedisplay();
 				break;
@@ -810,26 +850,26 @@ void display()
 				glBindTexture(GL_TEXTURE_2D, t->texName_countries[state->states[state->states.size() - 4].second % 10 - 1]);
 
 				glBegin(GL_QUADS);
-				glTexCoord2i(0, 0); glVertex2i(0, height/2 + 75);
-				glTexCoord2i(0, 1); glVertex2i(0, height);
-				glTexCoord2i(1, 1); glVertex2i(width, height);
-				glTexCoord2i(1, 0); glVertex2i(width, height/2 + 75);
+				glTexCoord2i(0, 0); glVertex2i(0, height_aux / 2 + 75 + (height_window - height_aux));
+				glTexCoord2i(0, 1); glVertex2i(0, height_window);
+				glTexCoord2i(1, 1); glVertex2i(width_window, height_window);
+				glTexCoord2i(1, 0); glVertex2i(width_window, height_aux / 2 + 75 + (height_window - height_aux));
 				glEnd();
 
 				glBindTexture(GL_TEXTURE_2D, t->texName_countries[state->states[state->states.size() - 2].second % 10 - 1]);
 
 				glBegin(GL_QUADS);
-				glTexCoord2i(0, 0); glVertex2i(0, 150);
-				glTexCoord2i(0, 1); glVertex2i(0, height/2 + 75);
-				glTexCoord2i(1, 1); glVertex2i(width, height/2 + 75);
-				glTexCoord2i(1, 0); glVertex2i(width, 150);
+				glTexCoord2i(0, 0); glVertex2i(0, 150 + (height_window - height_aux));
+				glTexCoord2i(0, 1); glVertex2i(0, height_aux / 2 + 75 + (height_window - height_aux));
+				glTexCoord2i(1, 1); glVertex2i(width_window, height_aux / 2 + 75 + (height_window - height_aux));
+				glTexCoord2i(1, 0); glVertex2i(width_window, 150 + (height_window - height_aux));
 				glEnd();
 
 				glPushMatrix();
 				glColor3f(1.0, 0.0, 0.0);
-				glLineWidth(5.0);
-				glTranslated(10 , 125, 0);
-				glScalef(0.2,0.2,1.0);
+				glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.45);
+				glTranslated(10 * width_window / width_aux, 105 + (height_window - height_aux), 0);
+				glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
 				switch (state->states[state->states.size() - 4].second)
 				{
 					case 21 :
@@ -867,9 +907,9 @@ void display()
 
 				glPushMatrix();
 				glColor3f(1.0, 0.0, 0.0);
-				glLineWidth(5.0);
-				glTranslated(width/2, 125, 0);
-				glScalef(0.2,0.2,1.0);
+				glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.45);
+				glTranslated(10 * width_window / width_aux, 45 + (height_window - height_aux), 0);
+				glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
 				switch (state->states[state->states.size() - 2].second)
 				{
 					case 31 :
@@ -908,30 +948,46 @@ void display()
 
 				glPushMatrix();
 				glColor3f(1.0, 0.0, 0.0);
-				glLineWidth(5.0);
-				glTranslated(10 , 75, 0);
-				glScalef(0.17,0.17,1.0);
-				f->print_stroke_string(stroke_fonts[0], "Enter money until pressing space key. After that press B for return, N - going further");
+				glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.45);
+				glTranslated(10 * width_window / width_aux, -15 + (height_window - height_aux), 0);
+				glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+				f->print_stroke_string(stroke_fonts[0], "Enter money until pressing space key.");
+				glPopMatrix();
+
+				glPushMatrix();
+				glColor3f(1.0, 0.0, 0.0);
+				glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.45);
+				glTranslated(10 * width_window / width_aux, -75 + (height_window - height_aux), 0);
+				glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+				f->print_stroke_string(stroke_fonts[0], "After that press B for return, N - going further.");
 				glPopMatrix();
 				
 				glPushMatrix();
 				glColor3f(1.0, 0.0, 0.0);
-				glLineWidth(5.0);
-				glTranslated(10 , 25, 0);
-				glScalef(0.19,0.19,1.0);
-				f->print_stroke_string(stroke_fonts[0], "Warning : not only cost or power of unit matters, there is also the balance.");
+				glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.45);
+				glTranslated(10 * width_window / width_aux, -135 + (height_window - height_aux), 0);
+				glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+				f->print_stroke_string(stroke_fonts[0], "Warning : not only cost or power of unit matters,");
+				glPopMatrix();
+
+				glPushMatrix();
+				glColor3f(1.0, 0.0, 0.0);
+				glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.45);
+				glTranslated(10 * width_window / width_aux, -195 + (height_window - height_aux), 0);
+				glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+				f->print_stroke_string(stroke_fonts[0], "there is also the balance.");
 				glPopMatrix();
 
 				begin_enter_money = true;
 
 				glPushMatrix();
 				glColor3f(1.0, 0.0, 0.0);
-				glLineWidth(9.0);
-				glTranslated(10 , height/2, 0);
-				glScalef(0.9,0.9,1.0);
+				glLineWidth(9.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+				glTranslated(10 * width_window / width_aux, height_aux / 2 + (height_window - height_aux), 0);
+				glScalef(0.9 * width_window / width_aux, 0.9 * height_window / height_aux, 1.0);
 				string str = w->money + " denaries.";
 				if (w->money == "")
-					f->print_stroke_string(stroke_fonts[0], "0 denaries");
+					f->print_stroke_string(stroke_fonts[0], "0 denaries.");
 				else
 					f->print_stroke_string(stroke_fonts[0], f->string_to_ptrchar(str));
 				glPopMatrix();
@@ -977,10 +1033,10 @@ void display()
 									glBindTexture(GL_TEXTURE_2D, t->texName_1[i]);
 
 									glBegin(GL_QUADS);
-									glTexCoord2i(0, 0); glVertex2i(i*width/2, 250);
-									glTexCoord2i(0, 1); glVertex2i(i*width/2, height);
-									glTexCoord2i(1, 1); glVertex2i((i + 1)*width/2, height);
-									glTexCoord2i(1, 0); glVertex2i((i + 1)*width/2, 250);
+									glTexCoord2i(0, 0); glVertex2i(i * width_window / 2, 250 + (height_window - height_aux));
+									glTexCoord2i(0, 1); glVertex2i(i * width_window / 2, height_window);
+									glTexCoord2i(1, 1); glVertex2i((i + 1) * width_window / 2, height_window);
+									glTexCoord2i(1, 0); glVertex2i((i + 1) * width_window/ 2, 250 + (height_window - height_aux));
 									glEnd();
 								}
 							}
@@ -992,74 +1048,94 @@ void display()
 									glBindTexture(GL_TEXTURE_2D, t->texName_3[i]);
 
 									glBegin(GL_QUADS);
-									glTexCoord2i(0, 0); glVertex2i(i*width/2, 250);
-									glTexCoord2i(0, 1); glVertex2i(i*width/2, height);
-									glTexCoord2i(1, 1); glVertex2i((i + 1)*width/2, height);
-									glTexCoord2i(1, 0); glVertex2i((i + 1)*width/2, 250);
+									glTexCoord2i(0, 0); glVertex2i(i * width_window / 2, 250 + (height_window - height_aux));
+									glTexCoord2i(0, 1); glVertex2i(i * width_window / 2, height_window);
+									glTexCoord2i(1, 1); glVertex2i((i + 1) * width_window / 2, height_window);
+									glTexCoord2i(1, 0); glVertex2i((i + 1) * width_window / 2, 250 + (height_window - height_aux));
 									glEnd();
 								}
 							}
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 175, 0);
-							glScalef(0.2,0.2,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, 150 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "Horseman. 1000 denaries.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + width/2 , 175, 0);
-							glScalef(0.2,0.2,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux + width_window / 2, 150 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.6, 0.2 * height_window / height_aux * 1.4, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "Infantry. 500 denaries.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 125, 0);
-							glScalef(0.2,0.2,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Power - 24");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, 95 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Power - 24.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + width/2 , 125, 0);
-							glScalef(0.2,0.2,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Power - 18");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux + width_window / 2, 95 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Power - 18.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 75, 0);
-							glScalef(0.2,0.2,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, 40 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.6, 0.2 * height_window / height_aux * 1.4, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "You have ");
-							glTranslated(50 , 0, 0);
+							glTranslated(50 * width_window / width_aux, 0, 0);
 							f->print_stroke_string(stroke_fonts[0], f->string_to_ptrchar(w->rest_money));
-							glTranslated(50 , 0, 0);
+							glTranslated(50 * width_window / width_aux, 0, 0);
 							f->print_stroke_string(stroke_fonts[0], " denaries.");
-							glTranslated(50 , 0, 0);
-							f->print_stroke_string(stroke_fonts[0], " Click on the warrior for buying.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 25, 0);
-							glScalef(0.2,0.2,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Press B for return, N - for going further.");
-							glTranslated(50, 0, 0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -15 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.6, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Click on the warrior for buying.");
+							glPopMatrix();
+
+							glPushMatrix();
+							glColor3f(1.0, 0.0, 0.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -70 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Press B for return,");
+							glPopMatrix();
+
+							glPushMatrix();
+							glColor3f(1.0, 0.0, 0.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -125 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "N - for going further.");
+							glPopMatrix();
+
+							glPushMatrix();
+							glColor3f(1.0, 0.0, 0.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -180 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.8, 0.2 * height_window / height_aux * 1.4, 1.0);
 							if (num_country == 21)
 							{
-								f->print_stroke_string(stroke_fonts[0], "Your country is Barbarians");
+								f->print_stroke_string(stroke_fonts[0], "Your country is Barbarians.");
 							}
 							else
 							{
-								f->print_stroke_string(stroke_fonts[0], "Your country is Egypt");
+								f->print_stroke_string(stroke_fonts[0], "Your country is Egypt.");
 							}
 							glPopMatrix();
 
@@ -1071,17 +1147,17 @@ void display()
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(width/4 , 210, 0);
-							glScalef(0.3,0.3,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+							glTranslated(width_window / 4, 200 + (height_window - height_aux), 0);
+							glScalef(0.3 * width_window / width_aux, 0.3 * height_window / height_aux, 1.0);
 							f->print_stroke_string(stroke_fonts[0], cav);
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(3*width/4 , 210, 0);
-							glScalef(0.3,0.3,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+							glTranslated(3 * width_window / 4, 200 + (height_window - height_aux), 0);
+							glScalef(0.3 * width_window / width_aux, 0.3 * height_window / height_aux, 1.0);
 							f->print_stroke_string(stroke_fonts[0], inf);
 							glPopMatrix();
 
@@ -1096,83 +1172,103 @@ void display()
 								glBindTexture(GL_TEXTURE_2D, t->texName_2[i]);
 
 								glBegin(GL_QUADS);
-								glTexCoord2i(0, 0); glVertex2i(i*width/3, 250);
-								glTexCoord2i(0, 1); glVertex2i(i*width/3, height);
-								glTexCoord2i(1, 1); glVertex2i((i + 1)*width/3, height);
-								glTexCoord2i(1, 0); glVertex2i((i + 1)*width/3, 250);
+								glTexCoord2i(0, 0); glVertex2i(i * width_window / 3, 250 + (height_window - height_aux));
+								glTexCoord2i(0, 1); glVertex2i(i * width_window / 3, height_window);
+								glTexCoord2i(1, 1); glVertex2i((i + 1) * width_window / 3, height_window);
+								glTexCoord2i(1, 0); glVertex2i((i + 1) * width_window / 3, 250 + (height_window - height_aux));
 								glEnd();
 							}
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 175, 0);
-							glScalef(0.17,0.17,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+							glTranslated(10 * width_window / width_aux, 150 + (height_window - height_aux), 0);
+							glScalef(0.17 * width_window / width_aux * 1.15, 0.17 * height_window / height_aux * 1.1, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "Horseman. 1000 denaries.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + width/3 , 175, 0);
-							glScalef(0.17,0.17,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+							glTranslated(10 * width_window / width_aux + width_window / 3, 150 + (height_window - height_aux), 0);
+							glScalef(0.17 * width_window / width_aux * 1.15, 0.17 * height_window / height_aux * 1.1, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "Elephants. 1500 denaries.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + 2*width/3 , 175, 0);
-							glScalef(0.17,0.17,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+							glTranslated(10 * width_window / width_aux + 2 * width_window / 3, 150 + (height_window - height_aux), 0);
+							glScalef(0.17 * width_window / width_aux * 1.15, 0.17 * height_window / height_aux * 1.1, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "Infantry. 500 denaries.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 125, 0);
-							glScalef(0.17,0.17,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Power - 24");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, 95 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Power - 24.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + width/3 , 125, 0);
-							glScalef(0.17,0.17,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Power - 28");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux + width_window / 3, 95 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Power - 28.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + 2*width/3 , 125, 0);
-							glScalef(0.17,0.17,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Power - 18");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux + 2 * width_window / 3 , 95 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Power - 18.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 75, 0);
-							glScalef(0.2,0.2,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, 40 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.6, 0.2 * height_window / height_aux * 1.4, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "You have ");
-							glTranslated(50 , 0, 0);
+							glTranslated(50 * width_window / width_aux, 0, 0);
 							f->print_stroke_string(stroke_fonts[0], f->string_to_ptrchar(w->rest_money));
-							glTranslated(50 , 0, 0);
+							glTranslated(50 * width_window / width_aux, 0, 0);
 							f->print_stroke_string(stroke_fonts[0], " denaries.");
-							glTranslated(50 , 0, 0);
-							f->print_stroke_string(stroke_fonts[0], " Click on the warrior for buying.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 25, 0);
-							glScalef(0.2,0.2,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Press B for return, N - for going further.");
-							glTranslated(50, 0, 0);
-							f->print_stroke_string(stroke_fonts[0], "Your country is Carthage");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -15 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.6, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Click on the warrior for buying.");
+							glPopMatrix();
+
+							glPushMatrix();
+							glColor3f(1.0, 0.0, 0.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -70 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Press B for return,");
+							glPopMatrix();
+
+							glPushMatrix();
+							glColor3f(1.0, 0.0, 0.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -125 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "N - for going further.");
+							glPopMatrix();
+
+							glPushMatrix();
+							glColor3f(1.0, 0.0, 0.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -180 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.8, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Your country is Carthage.");
 							glPopMatrix();
 
 							char cav[20];
@@ -1185,25 +1281,25 @@ void display()
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(width/6 , 210, 0);
-							glScalef(0.3,0.3,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+							glTranslated(width_window / 6, 200 + (height_window - height_aux), 0);
+							glScalef(0.3 * width_window / width_aux, 0.3 * height_window / height_aux, 1.0);
 							f->print_stroke_string(stroke_fonts[0], cav);
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(width/2 , 210, 0);
-							glScalef(0.3,0.3,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+							glTranslated(width_window / 2, 200 + (height_window - height_aux), 0);
+							glScalef(0.3 * width_window / width_aux, 0.3 * height_window / height_aux, 1.0);
 							f->print_stroke_string(stroke_fonts[0], eleph);
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(5*width/6 , 210, 0);
-							glScalef(0.3,0.3,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+							glTranslated(5 * width_window / 6, 200 + (height_window - height_aux), 0);
+							glScalef(0.3 * width_window / width_aux, 0.3 * height_window / height_aux, 1.0);
 							f->print_stroke_string(stroke_fonts[0], inf);
 							glPopMatrix();
 
@@ -1218,67 +1314,87 @@ void display()
 								glBindTexture(GL_TEXTURE_2D, t->texName_4[i]);
 
 								glBegin(GL_QUADS);
-								glTexCoord2i(0, 0); glVertex2i(i*width/2, 250);
-								glTexCoord2i(0, 1); glVertex2i(i*width/2, height);
-								glTexCoord2i(1, 1); glVertex2i((i + 1)*width/2, height);
-								glTexCoord2i(1, 0); glVertex2i((i + 1)*width/2, 250);
+								glTexCoord2i(0, 0); glVertex2i(i * width_window /2, 250 + (height_window - height_aux));
+								glTexCoord2i(0, 1); glVertex2i(i * width_window / 2, height_window);
+								glTexCoord2i(1, 1); glVertex2i((i + 1) * width_window / 2, height_window);
+								glTexCoord2i(1, 0); glVertex2i((i + 1) * width_window / 2, 250 + (height_window - height_aux));
 								glEnd();
 							}
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 175, 0);
-							glScalef(0.2,0.2,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+							glTranslated(10 * width_window / width_aux, 150 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.15, 0.2 * height_window / height_aux * 1.1, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "Heavy horseman. 1000 denaries.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + width/2 , 175, 0);
-							glScalef(0.2,0.2,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+							glTranslated(10 * width_window / width_aux + width_window / 2, 150 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.15, 0.2 * height_window / height_aux * 1.1, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "Light horseman. 1200 denaries.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 125, 0);
-							glScalef(0.2,0.2,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Power - 24");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55); 
+							glTranslated(10 * width_window / width_aux, 95 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Power - 24.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + width/2 , 125, 0);
-							glScalef(0.2,0.2,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Power - 28");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux + width_window / 2, 95 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Power - 28.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 75, 0);
-							glScalef(0.2,0.2,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, 40 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.6, 0.2 * height_window / height_aux * 1.4, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "You have ");
-							glTranslated(50 , 0, 0);
+							glTranslated(50 * width_window / width_aux, 0, 0);
 							f->print_stroke_string(stroke_fonts[0], f->string_to_ptrchar(w->rest_money));
-							glTranslated(50 , 0, 0);
+							glTranslated(50 * width_window / width_aux, 0, 0);
 							f->print_stroke_string(stroke_fonts[0], " denaries.");
-							glTranslated(50 , 0, 0);
-							f->print_stroke_string(stroke_fonts[0], " Click on the warrior for buying.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 25, 0);
-							glScalef(0.2,0.2,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Press B for return, N - for going further.");
-							glTranslated(50, 0, 0);
-							f->print_stroke_string(stroke_fonts[0], "Your country is Parthia");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -15 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.6, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Click on the warrior for buying.");
+							glPopMatrix();
+
+							glPushMatrix();
+							glColor3f(1.0, 0.0, 0.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -70 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Press B for return,");
+							glPopMatrix();
+
+							glPushMatrix();
+							glColor3f(1.0, 0.0, 0.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -125 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "N - for going further.");
+							glPopMatrix();
+
+							glPushMatrix();
+							glColor3f(1.0, 0.0, 0.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -180 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.8, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Your country is Parthia.");
 							glPopMatrix();
 
 							char heavy_cav[20];
@@ -1289,23 +1405,23 @@ void display()
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(width/4 , 210, 0);
-							glScalef(0.3,0.3,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+							glTranslated(width_window / 4, 200 + (height_window - height_aux), 0);
+							glScalef(0.3 * width_window / width_aux, 0.3 * height_window / height_aux, 1.0);
 							f->print_stroke_string(stroke_fonts[0], heavy_cav);
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(3*width/4 , 210, 0);
-							glScalef(0.3,0.3,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+							glTranslated(3 * width_window / 4, 200 + (height_window - height_aux), 0);
+							glScalef(0.3 * width_window / width_aux, 0.3 * height_window / height_aux, 1.0);
 							f->print_stroke_string(stroke_fonts[0], light_cav);
 							glPopMatrix();
 
 							break;
 						};
-					//Rome, Seleucicds
+					//Rome, Seleucids
 					case 25 :
 					case 26:
 						{
@@ -1317,10 +1433,10 @@ void display()
 									glBindTexture(GL_TEXTURE_2D, t->texName_5[i]);
 
 									glBegin(GL_QUADS);
-									glTexCoord2i(0, 0); glVertex2i(i*width/4, 300);
-									glTexCoord2i(0, 1); glVertex2i(i*width/4, height);
-									glTexCoord2i(1, 1); glVertex2i((i + 1)*width/4, height);
-									glTexCoord2i(1, 0); glVertex2i((i + 1)*width/4, 300);
+									glTexCoord2i(0, 0); glVertex2i(i* width_window / 4, 300 + (height_window - height_aux));
+									glTexCoord2i(0, 1); glVertex2i(i * width_window / 4, height_window);
+									glTexCoord2i(1, 1); glVertex2i((i + 1) * width_window / 4, height_window);
+									glTexCoord2i(1, 0); glVertex2i((i + 1) * width_window / 4, 300 + (height_window - height_aux));
 									glEnd();
 								}
 							}
@@ -1332,26 +1448,26 @@ void display()
 									glBindTexture(GL_TEXTURE_2D, t->texName_6[i]);
 
 									glBegin(GL_QUADS);
-									glTexCoord2i(0, 0); glVertex2i(i*width/4, 300);
-									glTexCoord2i(0, 1); glVertex2i(i*width/4, height);
-									glTexCoord2i(1, 1); glVertex2i((i + 1)*width/4, height);
-									glTexCoord2i(1, 0); glVertex2i((i + 1)*width/4, 300);
+									glTexCoord2i(0, 0); glVertex2i(i * width_window / 4, 300 + (height_window - height_aux));
+									glTexCoord2i(0, 1); glVertex2i(i * width_window / 4, height_window);
+									glTexCoord2i(1, 1); glVertex2i((i + 1) * width_window / 4, height_window);
+									glTexCoord2i(1, 0); glVertex2i((i + 1) * width_window / 4, 300 + (height_window - height_aux));
 									glEnd();
 								}
 							}
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 225, 0);
-							glScalef(0.2,0.2,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+							glTranslated(10 * width_window / width_aux, 210 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.15, 0.2 * height_window / height_aux * 1.1, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "Artillery.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + width/4 , 225, 0);
-							glScalef(0.2,0.2,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+							glTranslated(10 * width_window / width_aux + width_window / 4, 210 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.15, 0.2 * height_window / height_aux * 1.1, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "Horseman.");
 							glPopMatrix();
 
@@ -1359,9 +1475,9 @@ void display()
 							{
 								glPushMatrix();
 								glColor3f(1.0, 0.0, 0.0);
-								glLineWidth(5.0);
-								glTranslated(10 + 2*width/4 , 225, 0);
-								glScalef(0.2,0.2,1.0);
+								glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+								glTranslated(10 * width_window / width_aux + 2 * width_window / 4, 210 + (height_window - height_aux), 0);
+								glScalef(0.2 * width_window / width_aux * 1.15, 0.2 * height_window / height_aux * 1.1, 1.0);
 								f->print_stroke_string(stroke_fonts[0], "Archer.");
 								glPopMatrix();
 							}
@@ -1369,18 +1485,18 @@ void display()
 							{
 								glPushMatrix();
 								glColor3f(1.0, 0.0, 0.0);
-								glLineWidth(5.0);
-								glTranslated(10 + 2*width/4 , 225, 0);
-								glScalef(0.2,0.2,1.0);
+								glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+								glTranslated(10 * width_window / width_aux + 2 * width_window / 4, 210 + (height_window - height_aux), 0);
+								glScalef(0.2 * width_window / width_aux * 1.15, 0.2 * height_window / height_aux * 1.1, 1.0);
 								f->print_stroke_string(stroke_fonts[0], "Elephants.");
 								glPopMatrix();
 							}
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + 3*width/4 , 225, 0);
-							glScalef(0.2,0.2,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+							glTranslated(10 * width_window / width_aux + 3 * width_window / 4, 210 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.15, 0.2 * height_window / height_aux * 1.1, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "Infantry.");
 							glPopMatrix();
 
@@ -1388,17 +1504,17 @@ void display()
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 175, 0);
-							glScalef(0.2,0.2,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+							glTranslated(10 * width_window / width_aux, 155 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.15, 0.2 * height_window / height_aux * 1.1, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "900 denaries.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + width/4 , 175, 0);
-							glScalef(0.2,0.2,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+							glTranslated(10 * width_window / width_aux + width_window / 4, 155 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.15, 0.2 * height_window / height_aux * 1.1, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "1000 denaries.");
 							glPopMatrix();
 
@@ -1406,9 +1522,9 @@ void display()
 							{
 								glPushMatrix();
 								glColor3f(1.0, 0.0, 0.0);
-								glLineWidth(5.0);
-								glTranslated(10 + 2*width/4 , 175, 0);
-								glScalef(0.2,0.2,1.0);
+								glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+								glTranslated(10 * width_window / width_aux + 2 * width_window / 4, 155 + (height_window - height_aux), 0);
+								glScalef(0.2 * width_window / width_aux * 1.15, 0.2 * height_window / height_aux * 1.1, 1.0);
 								f->print_stroke_string(stroke_fonts[0], "400 denaries.");
 								glPopMatrix();
 							}
@@ -1416,9 +1532,9 @@ void display()
 							{
 								glPushMatrix();
 								glColor3f(1.0, 0.0, 0.0);
-								glLineWidth(5.0);
-								glTranslated(10 + 2*width/4 , 175, 0);
-								glScalef(0.2,0.2,1.0);
+								glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+								glTranslated(10 * width_window / width_aux + 2 * width_window / 4, 155 + (height_window - height_aux), 0);
+								glScalef(0.2 * width_window / width_aux * 1.15, 0.2 * height_window / height_aux * 1.1, 1.0);
 								f->print_stroke_string(stroke_fonts[0], "1500 denaries.");
 								glPopMatrix();
 							}
@@ -1426,9 +1542,9 @@ void display()
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + 3*width/4 , 175, 0);
-							glScalef(0.2,0.2,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+							glTranslated(10 * width_window / width_aux + 3 * width_window / 4, 155 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.15, 0.2 * height_window / height_aux * 1.1, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "500 denaries.");
 							glPopMatrix();
 
@@ -1436,77 +1552,97 @@ void display()
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 125, 0);
-							glScalef(0.2,0.2,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Power - 20");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, 100 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.4, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Power - 20.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + width/4 , 125, 0);
-							glScalef(0.2,0.2,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Power - 24");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux + width_window / 4, 100 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.4, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Power - 24.");
 							glPopMatrix();
 
 							if (num_country == 25)
 							{
 								glPushMatrix();
 								glColor3f(1.0, 0.0, 0.0);
-								glLineWidth(5.0);
-								glTranslated(10 + 2*width/4 , 125, 0);
-								glScalef(0.2,0.2,1.0);
-								f->print_stroke_string(stroke_fonts[0], "Power - 17");
+								glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+								glTranslated(10 * width_window / width_aux + 2 * width_window / 4, 100 + (height_window - height_aux), 0);
+								glScalef(0.2 * width_window / width_aux * 1.4, 0.2 * height_window / height_aux * 1.4, 1.0);
+								f->print_stroke_string(stroke_fonts[0], "Power - 17.");
 								glPopMatrix();
 							}
 							else
 							{
 								glPushMatrix();
 								glColor3f(1.0, 0.0, 0.0);
-								glLineWidth(5.0);
-								glTranslated(10 + 2*width/4 , 125, 0);
-								glScalef(0.2,0.2,1.0);
-								f->print_stroke_string(stroke_fonts[0], "Power - 28");
+								glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+								glTranslated(10 * width_window / width_aux + 2 * width_window / 4, 100 + (height_window - height_aux), 0);
+								glScalef(0.2 * width_window / width_aux * 1.4, 0.2 * height_window / height_aux * 1.4, 1.0);
+								f->print_stroke_string(stroke_fonts[0], "Power - 28.");
 								glPopMatrix();
 							}
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + 3*width/4 , 125, 0);
-							glScalef(0.2,0.2,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Power - 18");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux + 3 * width_window / 4, 100 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.4, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Power - 18.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 75, 0);
-							glScalef(0.2,0.2,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, 45 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.6, 0.2 * height_window / height_aux * 1.4, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "You have ");
-							glTranslated(50 , 0, 0);
+							glTranslated(50 * width_window / width_aux, 0, 0);
 							f->print_stroke_string(stroke_fonts[0], f->string_to_ptrchar(w->rest_money));
-							glTranslated(50 , 0, 0);
+							glTranslated(50 * width_window / width_aux, 0, 0);
 							f->print_stroke_string(stroke_fonts[0], " denaries.");
-							glTranslated(50 , 0, 0);
-							f->print_stroke_string(stroke_fonts[0], " Click on the warrior for buying.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 25, 0);
-							glScalef(0.2,0.2,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Press B for return, N - for going further.");
-							glTranslated(50, 0, 0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -10 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.6, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Click on the warrior for buying.");
+							glPopMatrix();
+
+							glPushMatrix();
+							glColor3f(1.0, 0.0, 0.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -65 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Press B for return,");
+							glPopMatrix();
+
+							glPushMatrix();
+							glColor3f(1.0, 0.0, 0.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -120 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "N - for going further.");
+							glPopMatrix();
+
+							glPushMatrix();
+							glColor3f(1.0, 0.0, 0.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -175 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.8, 0.2 * height_window / height_aux * 1.4, 1.0);
 							if (num_country == 25)
 							{
-								f->print_stroke_string(stroke_fonts[0], "Your country is Rome");
+								f->print_stroke_string(stroke_fonts[0], "Your country is Rome.");
 							}
 							else
 							{
-								f->print_stroke_string(stroke_fonts[0], "Your country is Seleucids");
+								f->print_stroke_string(stroke_fonts[0], "Your country is Seleucids.");
 							}
 							glPopMatrix();
 
@@ -1524,17 +1660,17 @@ void display()
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(width/8 , 260, 0);
-							glScalef(0.3,0.3,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+							glTranslated(width_window /8, 250 + (height_window - height_aux), 0);
+							glScalef(0.3 * width_window / width_aux, 0.3 * height_window / height_aux, 1.0);
 							f->print_stroke_string(stroke_fonts[0], arta);
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(3*width/8 , 260, 0);
-							glScalef(0.3,0.3,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+							glTranslated(3 * width_window / 8, 250 + (height_window - height_aux), 0);
+							glScalef(0.3 * width_window / width_aux, 0.3 * height_window / height_aux, 1.0);
 							f->print_stroke_string(stroke_fonts[0], heavy_cav);
 							glPopMatrix();
 
@@ -1542,9 +1678,9 @@ void display()
 							{
 								glPushMatrix();
 								glColor3f(1.0, 0.0, 0.0);
-								glLineWidth(5.0);
-								glTranslated(5*width/8 , 260, 0);
-								glScalef(0.3,0.3,1.0);
+								glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+								glTranslated(5 * width_window / 8, 250 + (height_window - height_aux), 0);
+								glScalef(0.3 * width_window / width_aux, 0.3 * height_window / height_aux, 1.0);
 								f->print_stroke_string(stroke_fonts[0], arch);
 								glPopMatrix();
 							}
@@ -1552,18 +1688,18 @@ void display()
 							{
 								glPushMatrix();
 								glColor3f(1.0, 0.0, 0.0);
-								glLineWidth(5.0);
-								glTranslated(5*width/8 , 260, 0);
-								glScalef(0.3,0.3,1.0);
+								glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+								glTranslated(5 * width_window / 8, 250 + (height_window - height_aux), 0);
+								glScalef(0.3 * width_window / width_aux, 0.3 * height_window / height_aux, 1.0);
 								f->print_stroke_string(stroke_fonts[0], eleph);
 								glPopMatrix();
 							}
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(7*width/8 , 260, 0);
-							glScalef(0.3,0.3,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+							glTranslated(7 * width_window / 8, 250 + (height_window - height_aux), 0);
+							glScalef(0.3 * width_window / width_aux, 0.3 * height_window / height_aux, 1.0);
 							f->print_stroke_string(stroke_fonts[0], inf);
 							glPopMatrix();
 							break;
@@ -1602,10 +1738,10 @@ void display()
 									glBindTexture(GL_TEXTURE_2D, t->texName_1[i]);
 
 									glBegin(GL_QUADS);
-									glTexCoord2i(0, 0); glVertex2i(i*width/2, 250);
-									glTexCoord2i(0, 1); glVertex2i(i*width/2, height);
-									glTexCoord2i(1, 1); glVertex2i((i + 1)*width/2, height);
-									glTexCoord2i(1, 0); glVertex2i((i + 1)*width/2, 250);
+									glTexCoord2i(0, 0); glVertex2i(i * width_window / 2, 250 + (height_window - height_aux));
+									glTexCoord2i(0, 1); glVertex2i(i * width_window / 2, height_window);
+									glTexCoord2i(1, 1); glVertex2i((i + 1) * width_window / 2, height_window);
+									glTexCoord2i(1, 0); glVertex2i((i + 1) * width_window / 2, 250 + (height_window - height_aux));
 									glEnd();
 								}
 							}
@@ -1616,67 +1752,91 @@ void display()
 									glBindTexture(GL_TEXTURE_2D, t->texName_3[i]);
 
 									glBegin(GL_QUADS);
-									glTexCoord2i(0, 0); glVertex2i(i*width/2, 250);
-									glTexCoord2i(0, 1); glVertex2i(i*width/2, height);
-									glTexCoord2i(1, 1); glVertex2i((i + 1)*width/2, height);
-									glTexCoord2i(1, 0); glVertex2i((i + 1)*width/2, 250);
+									glTexCoord2i(0, 0); glVertex2i(i * width_window / 2, 250 + (height_window - height_aux));
+									glTexCoord2i(0, 1); glVertex2i(i * width_window / 2, height_window);
+									glTexCoord2i(1, 1); glVertex2i((i + 1) * width_window/ 2, height_window);
+									glTexCoord2i(1, 0); glVertex2i((i + 1) * width_window /2, 250 + (height_window - height_aux));
 									glEnd();
 								}
 							}
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 175, 0);
-							glScalef(0.2,0.2,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, 150 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "Horseman. 1000 denaries.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + width/2 , 175, 0);
-							glScalef(0.2,0.2,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux + width_window / 2, 150 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.6, 0.2 * height_window / height_aux * 1.4, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "Infantry. 500 denaries.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 125, 0);
-							glScalef(0.2,0.2,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Power - 24");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, 95 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Power - 24.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + width/2 , 125, 0);
-							glScalef(0.2,0.2,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Power - 18");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux + width_window / 2, 95 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Power - 18.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 75, 0);
-							glScalef(0.2,0.2,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Enemy's warriors are chosen. You have ");
-							glTranslated(50, 0, 0);
-							f->print_stroke_string(stroke_fonts[0], f->string_to_ptrchar(floatToString((countries->country_effects[p] - 1.0f)*100.0f)));
-							glTranslated(50, 0, 0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, 40 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.6, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Enemy's warriors are chosen.");
+							glPopMatrix();
+
+							glPushMatrix();
+							glColor3f(1.0, 0.0, 0.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -15 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.8, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "You have ");
+							glTranslated(50 * width_window / width_aux, 0, 0);
+							f->print_stroke_string(stroke_fonts[0], f->string_to_ptrchar(float_to_string((countries->country_effects[p] - 1.0f) * 100.0f)));
+							glTranslated(50 * width_window / width_aux, 0, 0);
 							if (enemy_country == 31)
-								f->print_stroke_string(stroke_fonts[0],"% upon Barbarians.");
+								f->print_stroke_string(stroke_fonts[0], "% upon Barbarians.");
 							else
-								f->print_stroke_string(stroke_fonts[0],"% upon Egypt.");
+								f->print_stroke_string(stroke_fonts[0], "% upon Egypt.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 25, 0);
-							glScalef(0.2,0.2,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Press B for return, N - for going to counting scores for battle.");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -70 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Press B for return,");
+							glPopMatrix();
+
+							glPushMatrix();
+							glColor3f(1.0, 0.0, 0.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -125 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "N - for going to counting");
+							glPopMatrix();
+
+							glPushMatrix();
+							glColor3f(1.0, 0.0, 0.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -180 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "scores for battle.");
 							glPopMatrix();
 
 							char cav[20];
@@ -1687,17 +1847,17 @@ void display()
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(width/4 , 210, 0);
-							glScalef(0.3,0.3,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+							glTranslated(width_window / 4, 200 + (height_window - height_aux), 0);
+							glScalef(0.3 * width_window / width_aux, 0.3 * height_window / height_aux, 1.0);
 							f->print_stroke_string(stroke_fonts[0], cav);
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(3*width/4 , 210, 0);
-							glScalef(0.3,0.3,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+							glTranslated(3 * width_window / 4, 200 + (height_window - height_aux), 0);
+							glScalef(0.3 * width_window / width_aux, 0.3 * height_window / height_aux, 1.0);
 							f->print_stroke_string(stroke_fonts[0], inf);
 							glPopMatrix();
 							break;
@@ -1710,79 +1870,103 @@ void display()
 								glBindTexture(GL_TEXTURE_2D, t->texName_2[i]);
 
 								glBegin(GL_QUADS);
-								glTexCoord2i(0, 0); glVertex2i(i*width/3, 250);
-								glTexCoord2i(0, 1); glVertex2i(i*width/3, height);
-								glTexCoord2i(1, 1); glVertex2i((i + 1)*width/3, height);
-								glTexCoord2i(1, 0); glVertex2i((i + 1)*width/3, 250);
+								glTexCoord2i(0, 0); glVertex2i(i * width_window / 3, 250 + (height_window - height_aux));
+								glTexCoord2i(0, 1); glVertex2i(i * width_window / 3, height_window);
+								glTexCoord2i(1, 1); glVertex2i((i + 1) * width_window / 3, height_window);
+								glTexCoord2i(1, 0); glVertex2i((i + 1) * width_window / 3, 250 + (height_window - height_aux));
 								glEnd();
 							}
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 175, 0);
-							glScalef(0.17,0.17,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+							glTranslated(10 * width_window / width_aux, 150 + (height_window - height_aux), 0);
+							glScalef(0.17 * width_window / width_aux * 1.15, 0.17 * height_window / height_aux * 1.1, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "Horseman. 1000 denaries.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + width/3 , 175, 0);
-							glScalef(0.17,0.17,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+							glTranslated(10 * width_window / width_aux + width_window / 3, 150 + (height_window - height_aux), 0);
+							glScalef(0.17 * width_window / width_aux * 1.15, 0.17 * height_window / height_aux * 1.1, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "Elephants. 1500 denaries.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + 2*width/3 , 175, 0);
-							glScalef(0.17,0.17,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+							glTranslated(10 * width_window / width_aux + 2 * width_window / 3, 150 + (height_window - height_aux), 0);
+							glScalef(0.17 * width_window / width_aux * 1.15, 0.17 * height_window / height_aux * 1.1, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "Infantry. 500 denaries.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 125, 0);
-							glScalef(0.17,0.17,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Power - 24");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, 95 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Power - 24.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + width/3 , 125, 0);
-							glScalef(0.17,0.17,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Power - 28");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux + width_window / 3, 95 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Power - 28.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + 2*width/3 , 125, 0);
-							glScalef(0.17,0.17,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Power - 18");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux + 2 * width_window / 3, 95 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Power - 18.");
 							glPopMatrix();
 							
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 75, 0);
-							glScalef(0.2,0.2,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Enemy's warriors are chosen. You have ");
-							glTranslated(50, 0, 0);
-							f->print_stroke_string(stroke_fonts[0], f->string_to_ptrchar(floatToString((countries->country_effects[p] - 1.0f)*100.0f)));
-							glTranslated(50, 0, 0);
-							f->print_stroke_string(stroke_fonts[0],"% upon Carthage.");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, 40 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.6, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Enemy's warriors are chosen.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 25, 0);
-							glScalef(0.2,0.2,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Press B for return, N - for going to counting scores for battle.");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -15 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.8, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "You have ");
+							glTranslated(50 * width_window / width_aux, 0, 0);
+							f->print_stroke_string(stroke_fonts[0], f->string_to_ptrchar(float_to_string((countries->country_effects[p] - 1.0f) * 100.0f)));
+							glTranslated(50 * width_window / width_aux, 0, 0);
+							f->print_stroke_string(stroke_fonts[0], "% upon Carthage.");
+							glPopMatrix();
+
+							glPushMatrix();
+							glColor3f(1.0, 0.0, 0.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -70 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Press B for return,");
+							glPopMatrix();
+
+							glPushMatrix();
+							glColor3f(1.0, 0.0, 0.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -125 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "N - for going to counting");
+							glPopMatrix();
+
+							glPushMatrix();
+							glColor3f(1.0, 0.0, 0.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -180 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "scores for battle.");
 							glPopMatrix();
 
 							char cav[20];
@@ -1795,25 +1979,25 @@ void display()
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(width/6 , 210, 0);
-							glScalef(0.3,0.3,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+							glTranslated(width_window / 6, 200 + (height_window - height_aux), 0);
+							glScalef(0.3 * width_window / width_aux, 0.3 * height_window / height_aux, 1.0);
 							f->print_stroke_string(stroke_fonts[0], cav);
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(width/2 , 210, 0);
-							glScalef(0.3,0.3,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+							glTranslated(width_window / 2, 200 + (height_window - height_aux), 0);
+							glScalef(0.3 * width_window / width_aux, 0.3 * height_window / height_aux, 1.0);
 							f->print_stroke_string(stroke_fonts[0], eleph);
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(5*width/6 , 210, 0);
-							glScalef(0.3,0.3,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+							glTranslated(5 * width_window / 6, 200 + (height_window - height_aux), 0);
+							glScalef(0.3 * width_window / width_aux, 0.3 * height_window / height_aux, 1.0);
 							f->print_stroke_string(stroke_fonts[0], inf);
 							glPopMatrix();
 							break;
@@ -1826,63 +2010,87 @@ void display()
 								glBindTexture(GL_TEXTURE_2D, t->texName_4[i]);
 
 								glBegin(GL_QUADS);
-								glTexCoord2i(0, 0); glVertex2i(i*width/2, 250);
-								glTexCoord2i(0, 1); glVertex2i(i*width/2, height);
-								glTexCoord2i(1, 1); glVertex2i((i + 1)*width/2, height);
-								glTexCoord2i(1, 0); glVertex2i((i + 1)*width/2, 250);
+								glTexCoord2i(0, 0); glVertex2i(i * width_window / 2, 250 + (height_window - height_aux));
+								glTexCoord2i(0, 1); glVertex2i(i * width_window / 2, height_window);
+								glTexCoord2i(1, 1); glVertex2i((i + 1) * width_window / 2, height_window);
+								glTexCoord2i(1, 0); glVertex2i((i + 1) * width_window/ 2, 250 + (height_window - height_aux));
 								glEnd();
 							}
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 175, 0);
-							glScalef(0.2,0.2,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+							glTranslated(10 * width_window / width_aux, 150 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.15, 0.2 * height_window / height_aux * 1.1, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "Heavy horseman. 1000 denaries.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + width/2 , 175, 0);
-							glScalef(0.2,0.2,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+							glTranslated(10 * width_window / width_aux + width_window / 2, 150 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.15, 0.2 * height_window / height_aux * 1.1, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "Light horseman. 1200 denaries.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 125, 0);
-							glScalef(0.2,0.2,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Power - 24");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, 95 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Power - 24.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + width/2 , 125, 0);
-							glScalef(0.2,0.2,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Power - 28");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux + width_window / 2, 95 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Power - 28.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 75, 0);
-							glScalef(0.2,0.2,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Enemy's warriors are chosen. You have ");
-							glTranslated(50, 0, 0);
-							f->print_stroke_string(stroke_fonts[0], f->string_to_ptrchar(floatToString((countries->country_effects[p] - 1.0f)*100.0f)));
-							glTranslated(50, 0, 0);
-							f->print_stroke_string(stroke_fonts[0],"% upon Parthia.");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, 40 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.6, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Enemy's warriors are chosen.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 25, 0);
-							glScalef(0.2,0.2,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Press B for return, N - for going to counting scores for battle.");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -15 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.8, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "You have ");
+							glTranslated(50 * width_window / width_aux, 0, 0);
+							f->print_stroke_string(stroke_fonts[0], f->string_to_ptrchar(float_to_string((countries->country_effects[p] - 1.0f) * 100.0f)));
+							glTranslated(50 * width_window / width_aux, 0, 0);
+							f->print_stroke_string(stroke_fonts[0], "% upon Parthia.");
+							glPopMatrix();
+
+							glPushMatrix();
+							glColor3f(1.0, 0.0, 0.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -70 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Press B for return,");
+							glPopMatrix();
+
+							glPushMatrix();
+							glColor3f(1.0, 0.0, 0.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -125 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "N - for going to counting");
+							glPopMatrix();
+
+							glPushMatrix();
+							glColor3f(1.0, 0.0, 0.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -180 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "scores for battle.");
 							glPopMatrix();
 
 							char heavy_cav[20];
@@ -1893,17 +2101,17 @@ void display()
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(width/4 , 210, 0);
-							glScalef(0.3,0.3,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+							glTranslated(width_window / 4, 200 + (height_window - height_aux), 0);
+							glScalef(0.3 * width_window / width_aux, 0.3 * height_window / height_aux, 1.0);
 							f->print_stroke_string(stroke_fonts[0], heavy_cav);
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(3*width/4 , 210, 0);
-							glScalef(0.3,0.3,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+							glTranslated(3 * width_window / 4, 200 + (height_window - height_aux), 0);
+							glScalef(0.3 * width_window / width_aux, 0.3 * height_window / height_aux, 1.0);
 							f->print_stroke_string(stroke_fonts[0], light_cav);
 							glPopMatrix();
 							break;
@@ -1919,10 +2127,10 @@ void display()
 									glBindTexture(GL_TEXTURE_2D, t->texName_5[i]);
 
 									glBegin(GL_QUADS);
-									glTexCoord2i(0, 0); glVertex2i(i*width/4, 300);
-									glTexCoord2i(0, 1); glVertex2i(i*width/4, height);
-									glTexCoord2i(1, 1); glVertex2i((i + 1)*width/4, height);
-									glTexCoord2i(1, 0); glVertex2i((i + 1)*width/4, 300);
+									glTexCoord2i(0, 0); glVertex2i(i * width_window / 4, 300 + (height_window - height_aux));
+									glTexCoord2i(0, 1); glVertex2i(i * width_window / 4, height_window);
+									glTexCoord2i(1, 1); glVertex2i((i + 1) * width_window / 4, height_window);
+									glTexCoord2i(1, 0); glVertex2i((i + 1) * width_window / 4, 300 + (height_window - height_aux));
 									glEnd();
 								}
 							}
@@ -1933,26 +2141,26 @@ void display()
 									glBindTexture(GL_TEXTURE_2D, t->texName_6[i]);
 
 									glBegin(GL_QUADS);
-									glTexCoord2i(0, 0); glVertex2i(i*width/4, 300);
-									glTexCoord2i(0, 1); glVertex2i(i*width/4, height);
-									glTexCoord2i(1, 1); glVertex2i((i + 1)*width/4, height);
-									glTexCoord2i(1, 0); glVertex2i((i + 1)*width/4, 300);
+									glTexCoord2i(0, 0); glVertex2i(i * width_window / 4, 300 + (height_window - height_aux));
+									glTexCoord2i(0, 1); glVertex2i(i * width_window / 4, height_window);
+									glTexCoord2i(1, 1); glVertex2i((i + 1) * width_window / 4, height_window);
+									glTexCoord2i(1, 0); glVertex2i((i + 1) * width_window / 4, 300 + (height_window - height_aux));
 									glEnd();
 								}
 							}
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 225, 0);
-							glScalef(0.2,0.2,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+							glTranslated(10 * width_window / width_aux, 210 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.15, 0.2 * height_window / height_aux * 1.1, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "Artillery.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + width/4 , 225, 0);
-							glScalef(0.2,0.2,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+							glTranslated(10 * width_window / width_aux + width_window / 4, 210 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.15, 0.2 * height_window / height_aux * 1.1, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "Horseman.");
 							glPopMatrix();
 
@@ -1960,9 +2168,9 @@ void display()
 							{
 								glPushMatrix();
 								glColor3f(1.0, 0.0, 0.0);
-								glLineWidth(5.0);
-								glTranslated(10 + 2*width/4 , 225, 0);
-								glScalef(0.2,0.2,1.0);
+								glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+								glTranslated(10 * width_window / width_aux + 2 * width_window / 4, 210 + (height_window - height_aux), 0);
+								glScalef(0.2 * width_window / width_aux * 1.15, 0.2 * height_window / height_aux * 1.1, 1.0);
 								f->print_stroke_string(stroke_fonts[0], "Archer.");
 								glPopMatrix();
 							}
@@ -1970,18 +2178,18 @@ void display()
 							{
 								glPushMatrix();
 								glColor3f(1.0, 0.0, 0.0);
-								glLineWidth(5.0);
-								glTranslated(10 + 2*width/4 , 225, 0);
-								glScalef(0.2,0.2,1.0);
+								glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+								glTranslated(10 * width_window / width_aux + 2 * width_window / 4, 210 + (height_window - height_aux), 0);
+								glScalef(0.2 * width_window / width_aux * 1.15, 0.2 * height_window / height_aux * 1.1, 1.0);
 								f->print_stroke_string(stroke_fonts[0], "Elephants.");
 								glPopMatrix();
 							}
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + 3*width/4 , 225, 0);
-							glScalef(0.2,0.2,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+							glTranslated(10 * width_window / width_aux + 3 * width_window / 4, 210 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.15, 0.2 * height_window / height_aux * 1.1, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "Infantry.");
 							glPopMatrix();
 
@@ -1989,17 +2197,17 @@ void display()
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 175, 0);
-							glScalef(0.2,0.2,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+							glTranslated(10 * width_window / width_aux, 155 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.15, 0.2 * height_window / height_aux * 1.1, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "900 denaries.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + width/4 , 175, 0);
-							glScalef(0.2,0.2,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+							glTranslated(10 * width_window / width_aux + width_window / 4, 155 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.15, 0.2 * height_window / height_aux * 1.1, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "1000 denaries.");
 							glPopMatrix();
 
@@ -2007,9 +2215,9 @@ void display()
 							{
 								glPushMatrix();
 								glColor3f(1.0, 0.0, 0.0);
-								glLineWidth(5.0);
-								glTranslated(10 + 2*width/4 , 175, 0);
-								glScalef(0.2,0.2,1.0);
+								glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+								glTranslated(10 * width_window / width_aux + 2 * width_window / 4, 155 + (height_window - height_aux), 0);
+								glScalef(0.2 * width_window / width_aux * 1.15, 0.2 * height_window / height_aux * 1.1, 1.0);
 								f->print_stroke_string(stroke_fonts[0], "400 denaries.");
 								glPopMatrix();
 							}
@@ -2017,9 +2225,9 @@ void display()
 							{
 								glPushMatrix();
 								glColor3f(1.0, 0.0, 0.0);
-								glLineWidth(5.0);
-								glTranslated(10 + 2*width/4 , 175, 0);
-								glScalef(0.2,0.2,1.0);
+								glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+								glTranslated(10 * width_window / width_aux + 2 * width_window / 4, 155 + (height_window - height_aux), 0);
+								glScalef(0.2 * width_window / width_aux * 1.15, 0.2 * height_window / height_aux * 1.1, 1.0);
 								f->print_stroke_string(stroke_fonts[0], "1500 denaries.");
 								glPopMatrix();
 							}
@@ -2027,9 +2235,9 @@ void display()
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + 3*width/4 , 175, 0);
-							glScalef(0.2,0.2,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.2);
+							glTranslated(10 * width_window / width_aux + 3 * width_window / 4, 155 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.15, 0.2 * height_window / height_aux * 1.1, 1.0);
 							f->print_stroke_string(stroke_fonts[0], "500 denaries.");
 							glPopMatrix();
 
@@ -2037,70 +2245,94 @@ void display()
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 125, 0);
-							glScalef(0.2,0.2,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Power - 20");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, 100 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.4, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Power - 20.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + width/4 , 125, 0);
-							glScalef(0.2,0.2,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Power - 24");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux + width_window / 4, 100 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.4, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Power - 24.");
 							glPopMatrix();
 
 							if (enemy_country == 35)
 							{
 								glPushMatrix();
 								glColor3f(1.0, 0.0, 0.0);
-								glLineWidth(5.0);
-								glTranslated(10 + 2*width/4 , 125, 0);
-								glScalef(0.2,0.2,1.0);
-								f->print_stroke_string(stroke_fonts[0], "Power - 17");
+								glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+								glTranslated(10 * width_window / width_aux + 2 * width_window / 4, 100 + (height_window - height_aux), 0);
+								glScalef(0.2 * width_window / width_aux * 1.4, 0.2 * height_window / height_aux * 1.4, 1.0);
+								f->print_stroke_string(stroke_fonts[0], "Power - 17.");
 								glPopMatrix();
 							}
 							else
 							{
 								glPushMatrix();
 								glColor3f(1.0, 0.0, 0.0);
-								glLineWidth(5.0);
-								glTranslated(10 + 2*width/4 , 125, 0);
-								glScalef(0.2,0.2,1.0);
-								f->print_stroke_string(stroke_fonts[0], "Power - 28");
+								glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+								glTranslated(10 * width_window / width_aux + 2 * width_window / 4, 100 + (height_window - height_aux), 0);
+								glScalef(0.2 * width_window / width_aux * 1.4, 0.2 * height_window / height_aux * 1.4, 1.0);
+								f->print_stroke_string(stroke_fonts[0], "Power - 28.");
 								glPopMatrix();
 							}
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 + 3*width/4 , 125, 0);
-							glScalef(0.2,0.2,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Power - 18");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux + 3 * width_window / 4, 100 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.4, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Power - 18.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 75, 0);
-							glScalef(0.2,0.2,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Enemy's warriors are chosen. You have ");
-							glTranslated(50, 0, 0);
-							f->print_stroke_string(stroke_fonts[0], f->string_to_ptrchar(floatToString((countries->country_effects[p] - 1.0f)*100.0f)));
-							glTranslated(50, 0, 0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, 45 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.6, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Enemy's warriors are chosen.");
+							glPopMatrix();
+
+							glPushMatrix();
+							glColor3f(1.0, 0.0, 0.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -10 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.8, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "You have ");
+							glTranslated(50 * width_window / width_aux, 0, 0);
+							f->print_stroke_string(stroke_fonts[0], f->string_to_ptrchar(float_to_string((countries->country_effects[p] - 1.0f) * 100.0f)));
+							glTranslated(50 * width_window / width_aux, 0, 0);
 							if (enemy_country == 35)
-								f->print_stroke_string(stroke_fonts[0],"% upon Rome.");
+								f->print_stroke_string(stroke_fonts[0], "% upon Rome.");
 							else
-								f->print_stroke_string(stroke_fonts[0],"% upon Seleucids.");
+								f->print_stroke_string(stroke_fonts[0], "% upon Seleucids.");
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(10 , 25, 0);
-							glScalef(0.2,0.2,1.0);
-							f->print_stroke_string(stroke_fonts[0], "Press B for return, N - for going to counting scores for battle.");
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -65 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "Press B for return,");
+							glPopMatrix();
+
+							glPushMatrix();
+							glColor3f(1.0, 0.0, 0.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -120 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "N - for going to counting");
+							glPopMatrix();
+
+							glPushMatrix();
+							glColor3f(1.0, 0.0, 0.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 0.55);
+							glTranslated(10 * width_window / width_aux, -175 + (height_window - height_aux), 0);
+							glScalef(0.2 * width_window / width_aux * 1.5, 0.2 * height_window / height_aux * 1.4, 1.0);
+							f->print_stroke_string(stroke_fonts[0], "scores for battle.");
 							glPopMatrix();
 
 							char heavy_cav[20];
@@ -2117,17 +2349,17 @@ void display()
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(width/8 , 260, 0);
-							glScalef(0.3,0.3,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+							glTranslated(width_window /8, 250 + (height_window - height_aux), 0);
+							glScalef(0.3 * width_window / width_aux, 0.3 * height_window / height_aux, 1.0);
 							f->print_stroke_string(stroke_fonts[0], arta);
 							glPopMatrix();
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(3*width/8 , 260, 0);
-							glScalef(0.3,0.3,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+							glTranslated(3 * width_window / 8, 250 + (height_window - height_aux), 0);
+							glScalef(0.3 * width_window / width_aux, 0.3 * height_window / height_aux, 1.0);
 							f->print_stroke_string(stroke_fonts[0], heavy_cav);
 							glPopMatrix();
 
@@ -2135,9 +2367,9 @@ void display()
 							{
 								glPushMatrix();
 								glColor3f(1.0, 0.0, 0.0);
-								glLineWidth(5.0);
-								glTranslated(5*width/8 , 260, 0);
-								glScalef(0.3,0.3,1.0);
+								glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+								glTranslated(5 * width_window / 8, 250 + (height_window - height_aux), 0);
+								glScalef(0.3 * width_window / width_aux, 0.3 * height_window / height_aux, 1.0);
 								f->print_stroke_string(stroke_fonts[0], arch);
 								glPopMatrix();
 							}
@@ -2145,18 +2377,18 @@ void display()
 							{
 								glPushMatrix();
 								glColor3f(1.0, 0.0, 0.0);
-								glLineWidth(5.0);
-								glTranslated(5*width/8 , 260, 0);
-								glScalef(0.3,0.3,1.0);
+								glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+								glTranslated(5 * width_window / 8, 250 + (height_window - height_aux), 0);
+								glScalef(0.3 * width_window / width_aux, 0.3 * height_window / height_aux, 1.0);
 								f->print_stroke_string(stroke_fonts[0], eleph);
 								glPopMatrix();
 							}
 
 							glPushMatrix();
 							glColor3f(1.0, 0.0, 0.0);
-							glLineWidth(5.0);
-							glTranslated(7*width/8 , 260, 0);
-							glScalef(0.3,0.3,1.0);
+							glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+							glTranslated(7 * width_window / 8, 250 + (height_window - height_aux), 0);
+							glScalef(0.3 * width_window / width_aux, 0.3 * height_window / height_aux, 1.0);
 							f->print_stroke_string(stroke_fonts[0], inf);
 							glPopMatrix();
 						};
@@ -2191,42 +2423,42 @@ void display()
 				
 				glPushMatrix();
 				glColor3f(1.0, 0.0, 0.0);
-				glLineWidth(5.0);
-				glTranslated(width/4 , 260, 0);
-				glScalef(2.0,2.0,1.0);
+				glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 5.0);
+				glTranslated(width_window / 6, 260 + (height_window - height_aux), 0);
+				glScalef(2.0 * width_window / width_aux * 1.4, 2.0 * height_window / height_aux * 1.4, 1.0);
 				f->print_stroke_string(stroke_fonts[0], score_1);
 				glPopMatrix();
 
 				glPushMatrix();
 				glColor3f(1.0, 0.0, 0.0);
-				glLineWidth(5.0);
-				glTranslated(3*width/4 , 260, 0);
-				glScalef(2.0,2.0,1.0);
+				glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 5.0);
+				glTranslated(2 * width_window / 3, 260 + (height_window - height_aux), 0);
+				glScalef(2.0 * width_window / width_aux * 1.4, 2.0 * height_window / height_aux * 1.4, 1.0);
 				f->print_stroke_string(stroke_fonts[0], score_2);
 				glPopMatrix();
 
 				glPushMatrix();
 				glColor3f(1.0, 0.0, 0.0);
-				glLineWidth(5.0);
-				glTranslated(10 , 125, 0);
-				glScalef(0.3,0.3,1.0);
-				f->print_stroke_string(stroke_fonts[0], "Your score");
+				glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+				glTranslated(10 * width_window / width_aux, 95 + (height_window - height_aux), 0);
+				glScalef(0.3 * width_window / width_aux * 1.6, 0.3 * height_window / height_aux * 1.4, 1.0);
+				f->print_stroke_string(stroke_fonts[0], "Your score.");
 				glPopMatrix();
 
 				glPushMatrix();
 				glColor3f(1.0, 0.0, 0.0);
-				glLineWidth(5.0);
-				glTranslated(10 + width/2 , 125, 0);
-				glScalef(0.3,0.3,1.0);
-				f->print_stroke_string(stroke_fonts[0], "Enemy's score");
+				glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+				glTranslated(10 * width_window / width_aux + width_window / 2, 95 + (height_window - height_aux), 0);
+				glScalef(0.3 * width_window / width_aux * 1.6, 0.3 * height_window / height_aux * 1.4, 1.0);
+				f->print_stroke_string(stroke_fonts[0], "Enemy's score.");
 				glPopMatrix();
 
 				glPushMatrix();
 				glColor3f(1.0, 0.0, 0.0);
-				glLineWidth(5.0);
-				glTranslated(10, 75, 0);
-				glScalef(0.3,0.3,1.0);
-				f->print_stroke_string(stroke_fonts[0], "Back - B, result battle - N");
+				glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+				glTranslated(10 * width_window / width_aux, -100 + (height_window - height_aux), 0);
+				glScalef(0.3 * width_window / width_aux * 1.6, 0.3 * height_window / height_aux * 1.4, 1.0);
+				f->print_stroke_string(stroke_fonts[0], "Back - B, result battle - N.");
 				glPopMatrix();
 
 				if (next_pressed)
@@ -2256,43 +2488,51 @@ void display()
 
 				glBegin(GL_QUADS);
 				glTexCoord2i(0, 0); glVertex2i(0, 0);
-				glTexCoord2i(0, 1); glVertex2i(0, height);
-				glTexCoord2i(1, 1); glVertex2i(width, height);
-				glTexCoord2i(1, 0); glVertex2i(width, 0);
+				glTexCoord2i(0, 1); glVertex2i(0, height_window);
+				glTexCoord2i(1, 1); glVertex2i(width_window, height_window);
+				glTexCoord2i(1, 0); glVertex2i(width_window, 0);
 				glEnd();
 
 				glPushMatrix();
 				glColor3f(1.0, 0.0, 0.0);
-				glLineWidth(10.0);
-				glTranslated(10 , 400, 0);
-				glScalef(0.5,0.5,1.0);
-				f->print_stroke_string(stroke_fonts[0], "Your score is ");
-				glTranslated(50, 0, 0);
-				f->print_stroke_string(stroke_fonts[0], f->string_to_ptrchar(floatToString(score)));
-				glTranslated(50, 0, 0);
-				f->print_stroke_string(stroke_fonts[0], " %");
+				glLineWidth(10.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+				glTranslated(10 * width_window / width_aux, 550 + (height_window - height_aux), 0);
+				glScalef(0.5 * width_window / width_aux * 1.6, 0.5 * height_window / height_aux * 1.4, 1.0);
+				f->print_stroke_string(stroke_fonts[0], "Your score");
+				glPopMatrix();
+
+				glPushMatrix();
+				glColor3f(1.0, 0.0, 0.0);
+				glLineWidth(10.0 * sqrt((width_window / width_aux) * (height_window / height_aux)));
+				glTranslated(10 * width_window / width_aux, 410 + (height_window - height_aux), 0);
+				glScalef(0.5 * width_window / width_aux * 1.6, 0.5 * height_window / height_aux * 1.4, 1.0);
+				f->print_stroke_string(stroke_fonts[0], "is ");
+				glTranslated(50 * width_window / width_aux, 0, 0);
+				f->print_stroke_string(stroke_fonts[0], f->string_to_ptrchar(float_to_string(score)));
+				glTranslated(50 * width_window / width_aux, 0, 0);
+				f->print_stroke_string(stroke_fonts[0], " %.");
 				glPopMatrix();
 				
 				glPushMatrix();
 				glColor3f(1.0, 0.0, 0.0);
-				glLineWidth(10.0);
-				glTranslated(10 , 200, 0);
-				glScalef(1.0,1.0,1.0);
+				glLineWidth(10.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 2.0);
+				glTranslated(10 * width_window / width_aux, 200 + (height_window - height_aux), 0);
+				glScalef(1.0 * width_window / width_aux, 1.0 * height_window / height_aux, 1.0);
 
 				if (score > 0)
 					f->print_stroke_string(stroke_fonts[0], "YOU WIN!");
 				else if (score < 0)
 					f->print_stroke_string(stroke_fonts[0], "YOU LOSE!");
 				else
-					f->print_stroke_string(stroke_fonts[0], "NICHYA");
+					f->print_stroke_string(stroke_fonts[0], "NICHYA.");
 				glPopMatrix();
 
 				glPushMatrix();
 				glColor3f(1.0, 0.0, 0.0);
-				glLineWidth(5.0);
-				glTranslated(10 , 25, 0);
-				glScalef(0.2,0.2,1.0);
-				f->print_stroke_string(stroke_fonts[0], "Press B for going back");
+				glLineWidth(5.0 * sqrt((width_window / width_aux) * (height_window / height_aux)) * 1.5);
+				glTranslated(10 * width_window / width_aux, -100 + (height_window - height_aux), 0);
+				glScalef(0.3 * width_window / width_aux * 2.0, 0.3 * height_window / height_aux * 1.7, 1.0);
+				f->print_stroke_string(stroke_fonts[0], "Press B for going back.");
 				glPopMatrix();
 				break;
 			};
@@ -2320,7 +2560,7 @@ int main(int argc, char** argv)
 {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
-	glutInitWindowSize(width, height);
+	glutInitWindowSize(width_window, height_window);
 	glutCreateWindow("Ancient battles");
 	init();
 	glutMouseFunc(mouse);
@@ -2328,8 +2568,8 @@ int main(int argc, char** argv)
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
 	PlaySound(TEXT("../requiem.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+	atexit(delete_function);
 	glutMainLoop();
-	delete_function();
 	return 0;
 }
 

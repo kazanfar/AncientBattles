@@ -12,8 +12,11 @@
 
 using namespace std;
 
-const int width = 1024;
-const int height = 680;
+const int width_window = 1024;
+const int height_window = 900;
+
+const int width_aux = 1024;
+const int height_aux = 680;
 
 const int num_text_countries = 6; // six states
 const int num_text_warriors_1 = 2; // two types of warriors in barbarian faction
