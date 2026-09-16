@@ -30,4 +30,4 @@ Project was written with Visual Studio. I recommend you to run the solution with
 **Changes:**
 1. Improved exit processing, with _atexit_ method.
 2. Improved destructor of "Textures" class processing.
-3. Height of program window increased, for better displaying of the text below with increased fonts.
+3. Height of program window increased, for better displaying of the text below with increased fonts. ***Height became 900 pixels.***
